@@ -22,8 +22,8 @@ def main():
     # first line - n and m
     # n - thread count 
     # m - job count
-    #n = 0
-    #m = 0
+    n = 0
+    m = 0
     n, m = map(int, input().split())
     data = list(map(int, input().split()))
 
