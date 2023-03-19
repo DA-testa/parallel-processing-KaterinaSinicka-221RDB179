@@ -1,19 +1,15 @@
 # python3
-import heapq
 
 def parallel_processing(n, m, data):
     # TODO: write the function for simulating parallel tasks, 
     # create the output pairs
-    heap = [(0,i) for i in range(n)]
-    output = [(0,0) for _ in range(m)]
+    threads = [(i,0) for i in range(n)]
+    output = []
 
-    for i in range(n,m):
-        time, thread = heapq.heappop(heap)
-        output[i] = (thread, time)
-        heapq.heappush(heap, (time + data[i], thread))
-    while heap:
-        time, thread = heapq.heappop(heap)
-        output[m-n+thread] = (thread, time)
+    for job in range(m):
+        thread = min(threads, key=lambda x: x[1])
+        output.append((thread[0], thread[1]))
+        threads[threads.index(thread)] = (thread[0],thread[1] + data[job])
 
     return output
 
@@ -35,10 +31,8 @@ def main():
     output = parallel_processing(n,m,data)
     
     # TODO: print out the results, each pair in it's own line
-    for thread, time in output:
-        print(thread, time)
-
-
+    for thread, start_time in output:
+        print(thread, start_time)
 
 if __name__ == "__main__":
     main()
